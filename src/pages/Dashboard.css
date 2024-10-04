@@ -1,0 +1,36 @@
+/* Dashboard.css */
+.dashboard-container {
+    display: flex;
+    /* 使用 flexbox 布局 */
+    flex-direction: column;
+    /* 垂直排列 */
+    align-items: center;
+    /* 水平居中 */
+    justify-content: center;
+    /* 垂直居中 */
+    min-height: 100vh;
+    /* 至少占满整个视口高度 */
+    padding: 20px;
+    /* 内边距 */
+    box-sizing: border-box;
+    /* 计算边距和内边距 */
+}
+
+.control-column {
+    display: flex;
+    /* 使用 flexbox 布局 */
+    flex-direction: column;
+    /* 垂直排列 */
+    align-items: center;
+    /* 水平居中 */
+}
+
+h3 {
+    margin-bottom: 16px;
+    /* 控制动作标题下边距 */
+}
+
+.ant-btn {
+    margin: 5px;
+    /* 按钮之间的间距 */
+}
