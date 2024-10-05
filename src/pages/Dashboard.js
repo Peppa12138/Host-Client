@@ -11,6 +11,7 @@ const Dashboard = () => {
         const fetchData = async () => {
             try {
                 const sensorResponse = await axios.get('http://localhost:5000/api/sensor/data');
+                console.log(sensorResponse.data);
                 setSensorData(sensorResponse.data);
                 const logsResponse = await axios.get('http://localhost:5000/api/sensor/logs');
                 setLogs(logsResponse.data);
@@ -20,6 +21,8 @@ const Dashboard = () => {
         };
 
         fetchData();
+        const intervalId = setInterval(fetchData,10000); // 每10秒调用
+        return () => clearInterval(intervalId); 
     }, []);
 
     const columns = [
