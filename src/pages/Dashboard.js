@@ -209,7 +209,7 @@ const Dashboard = () => {
     const handleControl = (action) => {
         axios.post('http://localhost:5000/api/sensor/control', { action })
             .then(response => {
-                setSensorData(response.data); // 更新传感器数据
+                // setSensorData(response.data); // 更新传感器数据
             })
             .catch(error => {
                 console.error('Error controlling sensor:', error);
