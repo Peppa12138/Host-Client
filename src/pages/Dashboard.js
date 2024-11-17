@@ -24,7 +24,7 @@ const Dashboard = () => {
         };
 
         fetchData();
-        const intervalId = setInterval(fetchData, 1000); // 每10秒调用
+        const intervalId = setInterval(fetchData, 1000); // 每秒刷新一次数据
         return () => clearInterval(intervalId);
     }, []);
 
@@ -36,24 +36,27 @@ const Dashboard = () => {
             title: 'Timestamp',
             dataIndex: 'timestamp',
             key: 'timestamp',
-            render: (text) => moment(text).tz('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss') // 转换为北京时间
+            render: (text) => moment(text).tz('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss')
         },
     ];
+
     const logsColumns = [
         { title: 'Log', dataIndex: 'action', key: 'action' },
         {
             title: 'Timestamp',
             dataIndex: 'timestamp',
             key: 'timestamp',
-            render: (text) => moment(text).tz('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss') // 转换为北京时间
-        },]
+            render: (text) => moment(text).tz('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss')
+        },
+    ];
+
     const handleControl = (action) => {
         axios.post('http://localhost:5000/api/sensor/control', { action })
             .then(response => {
                 const sortedSensorData = response.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                setSensorData(sortedSensorData); // 更新传感器数据并排序
-                const sortedLogs = [...logs, { action, timestamp: new Date().toISOString() }]; // 记录日志
-                setLogs(sortedLogs); // 更新日志
+                setSensorData(sortedSensorData);
+                const sortedLogs = [...logs, { action, timestamp: new Date().toISOString() }];
+                setLogs(sortedLogs);
             })
             .catch(error => {
                 console.error('Error controlling sensor:', error);
@@ -63,13 +66,13 @@ const Dashboard = () => {
     return (
         <div className="dashboard-container">
             <Row gutter={[16, 16]} justify="center">
-                <Col span={12}>
+                <Col span={16}>
                     <Table dataSource={sensorData} columns={columns} rowKey="id" />
                 </Col>
-                <Col span={10}>
+                <Col span={16}>
                     <Table dataSource={logs} columns={logsColumns}></Table>
                 </Col>
-                <Col span={10} className="control-column">
+                <Col span={12} className="control-column">
                     <h3>Control Actions</h3>
                     <Button onClick={() => handleControl('FORWARD')}>Forward</Button>
                     <Button onClick={() => handleControl('BACKWARD')}>Backward</Button>
